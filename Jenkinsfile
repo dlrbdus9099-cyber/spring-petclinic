@@ -7,13 +7,13 @@ pipeline {
   }
 
   environment {
-    DOCKERHUB_CREDIENTIALS = credentials('dockerCredentials')
+    DOCKERHUB_CREDENTIALS = credentials('dockerCredentials') 
   }
 
   stages{
     stage('Git Clone'){
       steps {
-        git url: 'https://github.com/dlrbdus9099/spring-petclinic.git', branch: 'main'
+        git url: 'https://github.com/dlrbdus9099-cyber/spring-petclinic.git', branch: 'main'
       }
     }
     stage('Maven Build'){
@@ -29,19 +29,18 @@ pipeline {
         """
       }
     }
-  stage('Docker Hub Login') {
-  steps {
-    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
+    stage('Docker Hub Login') {
+      steps {
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+      }
+    }
+    stage('Docker Image Push') {
+      steps {
+        sh 'docker push leegyuyeon/spring-petclinic:latest'
+      }
+    }
   }
 }
-  stage('Docker Image Push') {
-    steps {
-      sh 'docker push leegyuyeon/spring-petclinic:latest
-     }
-   }
-  }
-}
-
 
 
 
