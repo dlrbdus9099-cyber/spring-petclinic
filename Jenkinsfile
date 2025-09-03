@@ -6,6 +6,10 @@ pipeline {
     jdk "JDK17"
   }
 
+  environment {
+    DOCKERHUB_CREDIENTIALS = credentials('dockerCredentials')
+  }
+
   stages{
     stage('Git Clone'){
       steps {
@@ -25,6 +29,16 @@ pipeline {
         """
       }
     }
+  stage('Docker Hub Login') {
+  steps {
+    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
+  }
+}
+  stage('Docker Image Push') {
+    steps {
+      sh 'docker push leegyuyeon/spring-petclinic:latest
+     }
+   }
   }
 }
 
