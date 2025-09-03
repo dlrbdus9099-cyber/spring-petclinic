@@ -9,7 +9,7 @@ pipeline {
   stages{
     stage('Git Clone'){
       steps {
-        git url: 'https://github.com/sjh4616/spring-petclinic.git', branch: 'main'
+        git url: 'https://github.com/dlrbdus9099/spring-petclinic.git', branch: 'main'
       }
     }
     stage('Maven Build'){
@@ -20,8 +20,8 @@ pipeline {
     stage('Docker Image Create') {
       steps {
         sh """
-        docker build -t s4616/spring-petclinic:$BUILD_NUMBER .
-        docker tag s4616/spring-petclinic:$BUILD_NUMBER s4616/spring-petclinic:latest
+        docker build -t leegyuyeon/spring-petclinic:$BUILD_NUMBER .
+        docker tag leegyuyeon/spring-petclinic:$BUILD_NUMBER s4616/spring-petclinic:latest
         """
       }
     }
